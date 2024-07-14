@@ -8,21 +8,17 @@ def get_days_from_today(date):
     #   param date: a string representing a date in the format 'YYYY-MM-DD'
     #   Output:
     #   The function returns an integer that indicates the number of days from the specified date to the current date
-      while True:
-            user_date = input('enter your date in the following format "YYYY-MM-DD":  ') 
-            #user enters a date in the specified format
+      
 
-            try: #the function performs the calculation if the date format is met
-                  date = datetime.strptime(user_date, "%Y-%m-%d")
-                  current_date = datetime.today()
-                  date_interval = current_date - date
-                  break
-            
-            except ValueError: #user receives a corresponding message if the date is entered in an invalid format
-                  print(f'{user_date} has incorrect format. Please enter your date using the following format "YYYY-MM-DD"')
-                  break
-
-      return date_interval.days
+    try: #the function performs the calculation if the date format is met
+        date = datetime.strptime(date, "%Y-%m-%d")
+        current_date = datetime.today()
+        date_interval = current_date - date
+                
+    except ValueError: #user receives a corresponding message if the date is entered in an invalid format
+        print(f'{date} has incorrect format. Please enter your date using the following format "YYYY-MM-DD"')
+    
+    return date_interval.days
           
 result = get_days_from_today("2021-10-09")
 print(result)
@@ -43,24 +39,18 @@ def get_numbers_ticket(min: int, max: int, quantity: int):
     A sorted list of unique integer numbers in the specified range
     """
 
-    if min >= 1 and max <= 1000 and min < max and quantity < (max-min):
+    if min >= 1 and max <= 1000 and min < max and quantity <= (max-min):
         numbers_tickets = sorted(sample(range(min, max), quantity))
         return numbers_tickets
     #if the conditions for all parameters are met, the function returns the required list"""
     
     else:
-        if min < 1:
-          print("Parameter min must be >= 1")
-        elif max > 1000:
-          print("Parameter max must be <= 1000")
-        elif min > max:
-           print("Parament min must be < than parament max")
-        elif quantity >= (max-min):
-           print("Your quantity of numbers is not acceptable")
+        numbers_tickets = list()
+        return numbers_tickets 
     
-    #if the condition for at least one parameter is not met, the user receives a corresponding message"""
+    #if the condition for at least one parameter is not met, the function returns an empty list"""
 
-lottery_numbers = get_numbers_ticket(5, 50, 12)
+lottery_numbers = get_numbers_ticket(16, 15, 5)
 print("Your lottery numbers are:", lottery_numbers)
 
 
@@ -76,13 +66,13 @@ def normalize_phone(phone_number):
     # Функція повертає нормалізований телефонний номер у вигляді рядка
     #"""
   
-  normalize_phone = re.sub(r'\D', '', phone_number) #код видаляє пробіли та інші від літери символи
-  if not normalize_phone.startswith('+'): #код виконує дії, якщо номер телефону не починається з "+"
-    if normalize_phone.startswith('380'):
-      normalize_phone = "+" + normalize_phone #код додає "+", якщо номер починається на "380"
-  else:
-    normalize_phone = "+38" + normalize_phone #код додає "+380" до очищеного номеру
-  return normalize_phone            
+    normalize_phone = re.sub(r'\D', '', phone_number) #код видаляє пробіли та інші від літери символи
+    if not normalize_phone.startswith('+'): #код виконує дії, якщо номер телефону не починається з "+"
+        if normalize_phone.startswith('380'):
+            normalize_phone = "+" + normalize_phone #код додає "+", якщо номер починається на "380"
+        else:
+            normalize_phone = "+38" + normalize_phone #код додає "+380" до очищеного номеру
+    return normalize_phone            
 
-sanitized_number = normalize_phone("38050-111-22-22") 
+sanitized_number = normalize_phone("38050 111 22 11   ") 
 print("Нормалізований номер телефону для SMS-розсилки:", sanitized_number)
